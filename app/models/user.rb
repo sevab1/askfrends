@@ -6,6 +6,20 @@ class User < ApplicationRecord
   
   has_many :questions
 
+  validates :email, presence: true, length: {maximum: 255}
+  validates :email, uniqueness: true
+  validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
+
+  validates :username, presence: true, length: {maximum: 40}
+  
+  # Только нижний регистр
+  before_save :downcase_fields
+
+  
+  def downcase_fields
+    username.downcase!
+  end
+
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
 
