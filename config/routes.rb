@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-  resources :users
-  resources :users
-  resources :questions
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :users, except: [:destroy]
+  resources :questions, except: [:show, :new, :index]
   root to: 'users#index'
-  get 'users/index'
-  get 'users/new'
-  get 'users/edit'
-  get 'users/show'
- get 'show' => 'users#show'
+
+  get 'sign_up' => 'users#new'
+  get 'log_out' => 'sessions#destroy'
+  get 'log_in' => 'sessions#new'
 end
